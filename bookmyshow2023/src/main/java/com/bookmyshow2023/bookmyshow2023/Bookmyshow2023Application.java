@@ -57,6 +57,12 @@ public class Bookmyshow2023Application implements CommandLineRunner {
 
 		this.showController.createShow(0L,new Date(), new Date(), 1L, null, Language.TAMIL);
 
-		this.ticketController.bookTicket(1L, List.of(46L,44L,45L),1L);
+		TicketBookRunner ticketBookRunner1 = new TicketBookRunner(this.ticketController,1L,List.of(9L,10L,11L),1L);
+		TicketBookRunner ticketBookRunner2 = new TicketBookRunner(this.ticketController,1L,List.of(12L,10L,13L),1L);
+
+		Thread t1 = new Thread(ticketBookRunner1);
+		Thread t2 = new Thread(ticketBookRunner2);
+		t1.start();
+		t2.start();
 	}
 }
