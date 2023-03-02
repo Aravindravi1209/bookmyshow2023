@@ -1,13 +1,19 @@
 package com.bookmyshow2023.bookmyshow2023;
 
 import com.bookmyshow2023.bookmyshow2023.Dtos.CreateUserRequestDto;
-import com.bookmyshow2023.bookmyshow2023.controllers.CityController;
-import com.bookmyshow2023.bookmyshow2023.controllers.TheatreController;
-import com.bookmyshow2023.bookmyshow2023.controllers.UserController;
+import com.bookmyshow2023.bookmyshow2023.Models.Language;
+import com.bookmyshow2023.bookmyshow2023.Models.SeatType;
+import com.bookmyshow2023.bookmyshow2023.controllers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.relational.core.sql.In;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class Bookmyshow2023Application implements CommandLineRunner {
@@ -17,13 +23,19 @@ public class Bookmyshow2023Application implements CommandLineRunner {
 //	@Autowired
 	private CityController cityController;
 	private TheatreController theatreController;
+	private ShowController showController;
+	private TicketController ticketController;
 
 	@Autowired
-	public Bookmyshow2023Application(UserController userController, CityController cityController, TheatreController theatreController)
+	public Bookmyshow2023Application(UserController userController, CityController cityController,
+									 TheatreController theatreController, ShowController showController,
+									 TicketController ticketController)
 	{
 		this.userController=userController;
 		this.cityController=cityController;
 		this.theatreController=theatreController;
+		this.showController=showController;
+		this.ticketController=ticketController;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(Bookmyshow2023Application.class, args);
@@ -37,5 +49,14 @@ public class Bookmyshow2023Application implements CommandLineRunner {
 		this.cityController.addCity("Chennai");
 		this.theatreController.createTheatre("PVR, VR MALL","Anna Nagar",1L);
 		this.theatreController.addAuditorium(1L, "AUDI 1",100);
+
+		HashMap<SeatType, Integer> seatsForAuditorium = new HashMap<>();
+		seatsForAuditorium.put(SeatType.GOLD,100);
+		seatsForAuditorium.put(SeatType.VIP,50);
+		this.theatreController.addSeats(1L,seatsForAuditorium);
+
+		this.showController.createShow(0L,new Date(), new Date(), 1L, null, Language.TAMIL);
+
+		this.ticketController.bookTicket(1L, List.of(46L,44L,45L),1L);
 	}
 }

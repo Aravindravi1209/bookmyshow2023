@@ -11,4 +11,6 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
     Optional<Show> findById(Long id);
 
     Show save(Show show);
+
+
 }
