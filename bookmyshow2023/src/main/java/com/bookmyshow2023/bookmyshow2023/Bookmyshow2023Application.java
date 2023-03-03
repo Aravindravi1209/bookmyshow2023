@@ -26,16 +26,19 @@ public class Bookmyshow2023Application implements CommandLineRunner {
 	private ShowController showController;
 	private TicketController ticketController;
 
+	private MovieController movieController;
+
 	@Autowired
 	public Bookmyshow2023Application(UserController userController, CityController cityController,
 									 TheatreController theatreController, ShowController showController,
-									 TicketController ticketController)
+									 TicketController ticketController, MovieController movieController)
 	{
 		this.userController=userController;
 		this.cityController=cityController;
 		this.theatreController=theatreController;
 		this.showController=showController;
 		this.ticketController=ticketController;
+		this.movieController=movieController;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(Bookmyshow2023Application.class, args);
@@ -54,8 +57,9 @@ public class Bookmyshow2023Application implements CommandLineRunner {
 		seatsForAuditorium.put(SeatType.GOLD,100);
 		seatsForAuditorium.put(SeatType.VIP,50);
 		this.theatreController.addSeats(1L,seatsForAuditorium);
+		this.movieController.addMovie("MASTER",150,9.2);
 
-		this.showController.createShow(0L,new Date(), new Date(), 1L, null, Language.TAMIL);
+		this.showController.createShow(1L,new Date(), new Date(), 1L, null, Language.TAMIL);
 
 		TicketBookRunner ticketBookRunner1 = new TicketBookRunner(this.ticketController,1L,List.of(9L,10L,11L),1L);
 		TicketBookRunner ticketBookRunner2 = new TicketBookRunner(this.ticketController,1L,List.of(12L,10L,13L),1L);

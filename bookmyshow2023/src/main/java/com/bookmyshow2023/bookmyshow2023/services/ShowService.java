@@ -2,6 +2,7 @@ package com.bookmyshow2023.bookmyshow2023.services;
 
 import com.bookmyshow2023.bookmyshow2023.Models.*;
 import com.bookmyshow2023.bookmyshow2023.repositories.AuditoriumRepository;
+import com.bookmyshow2023.bookmyshow2023.repositories.MovieRepository;
 import com.bookmyshow2023.bookmyshow2023.repositories.ShowRepository;
 import com.bookmyshow2023.bookmyshow2023.repositories.ShowSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,15 @@ public class ShowService {
 
     private ShowSeatRepository showSeatRepository;
 
+    private MovieRepository movieRepository;
+
     @Autowired
     public ShowService(AuditoriumRepository auditoriumRepository, ShowRepository showRepository,
-                       ShowSeatRepository showSeatRepository) {
+                       ShowSeatRepository showSeatRepository, MovieRepository movieRepository) {
         this.auditoriumRepository = auditoriumRepository;
         this.showRepository=showRepository;
         this.showSeatRepository=showSeatRepository;
+        this.movieRepository=movieRepository;
     }
 
     public Show createShow(Long movieId, Date startTime, Date endTime,
@@ -36,6 +40,7 @@ public class ShowService {
         show.setStartTime(startTime);
         show.setEndTime(endTime);
         show.setLanguage(language);
+        show.setMovie(this.movieRepository.findById(movieId).get());
 
         Auditorium auditorium = auditoriumRepository.findById(audioriumId).get();
         show.setAuditorium(auditorium);

@@ -1,10 +1,15 @@
 package com.bookmyshow2023.bookmyshow2023.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Movie extends BaseModel{
     private String name;
 
@@ -21,19 +26,5 @@ public class Movie extends BaseModel{
     @Enumerated(EnumType.STRING)
     private List<MovieFeature> movieFeatures;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Actor> getCasts() {
-        return actors;
-    }
-
-    public void setCasts(List<Actor> actor) {
-        this.actors = actor;
-    }
 }
